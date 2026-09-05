@@ -32,6 +32,9 @@ def main():
             ax.axhspan(ys[d0 + 2] - 0.5, ys[d0] + 0.5, color="#efefef", zorder=0)
     for d0 in range(3, N, 3):
         ax.axhline(ys[d0] + 0.5, color="#888888", lw=1.2, zorder=1)
+    for k in range(1, N):                      # faint separators between datasets within a domain
+        if k % 3:
+            ax.axhline(ys[k] + 0.5, color="#bbbbbb", lw=0.8, ls=(0, (2, 3)), zorder=1)
     for (d, ds), y in zip(rows, ys):
         for m in ["qwen", "gemma", "ministral"]:
             b, f = g.loc[(m, ds), "s_amb_base"], g.loc[(m, ds), "s_amb_ft"]
