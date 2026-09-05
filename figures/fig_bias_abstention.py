@@ -22,6 +22,8 @@ def main():
         d = g[g.model == m]
         ax.scatter(d.dA, d.s_amb_delta, s=70, color=MODEL_COLOR[m], edgecolor="black", linewidth=0.6,
                    zorder=3, label=NAME[m])
+    lim = 1.08 * g.s_amb_delta.abs().max()          # symmetric y-range so the zero line sits mid-plot
+    ax.set_ylim(-lim, lim)
     ax.set_xlabel(r"$\Delta A$ (percentage points)", fontsize=17, fontweight="bold")
     ax.set_ylabel(r"$\Delta s_{\mathrm{AMB}}$", fontsize=17, fontweight="bold")
     ax.tick_params(labelsize=14); bold_ticks(ax)
@@ -29,7 +31,7 @@ def main():
     for s in ["top", "right"]:
         ax.spines[s].set_visible(False)
     ax.spines["left"].set_linewidth(2); ax.spines["bottom"].set_linewidth(2)
-    boxed_legend(ax, handletextpad=0.3, labelspacing=0.35, markerscale=0.9)
+    boxed_legend(ax, loc="lower right", handletextpad=0.3, labelspacing=0.35, markerscale=0.9)
     fig.tight_layout()
     save(fig, "Figure_bias_abstention")
 
