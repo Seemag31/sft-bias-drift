@@ -1,0 +1,6 @@
+# prediction files, model checkpoints, and caches are not versioned (see README: "Data")
+artifacts/
+results/logs/
+__pycache__/
+*.pyc
+.DS_Store

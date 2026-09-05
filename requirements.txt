@@ -1,0 +1,8 @@
+# Local environment (analysis and figures). Remote images for data preparation,
+# training, and evaluation are defined inside the Modal scripts themselves.
+modal>=1.5
+pandas>=2.0
+pyarrow
+numpy
+scipy
+matplotlib
