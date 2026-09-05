@@ -126,22 +126,10 @@ is kept as a control (`analysis/pku_safe_control.py`).
 | `capability.csv` | GSM8K / HumanEval / MedQA / Aegis-test accuracy before and after |
 | `deliberation_2x2.csv` | Experiment 3 cells on the 1,100-item subset |
 
-## What is and is not included
-
-This repository contains the full pipeline (data preparation, training, evaluation,
+Note: This repository contains the full pipeline (data preparation, training, evaluation,
 analysis, figures) and the results it produced (`results/`). It does not contain model
 checkpoints or per-item prediction files: reproducing the tables from scratch means
 running the pipeline, which builds the training data from public Hugging Face datasets,
 fetches BBQ from the official nyu-mll release, and writes predictions to `artifacts/`
 (layout in `evaluation/download_results.py`). The analysis scripts then read from
 `artifacts/` and regenerate everything under `results/`.
-
-## Citation
-
-```bibtex
-@inproceedings{lessabstention2026,
-  title     = {Less Abstention, More Bias? Demographic Bias Drift After Supervised Fine-Tuning},
-  booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2026}
-}
-```
