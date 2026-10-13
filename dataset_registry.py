@@ -1,4 +1,4 @@
-"""Registry of the 12 fine-tuning datasets (4 domains x 3) plus the PKU safe-only control arm.
+"""Registry of the 12 fine-tuning datasets (4 domains x 3).
 
 Datasets are processed in `priority` order within a domain: the anchor first, then
 the two additional datasets. Cross-dataset deduplication (data/build_samples.py)
@@ -104,6 +104,8 @@ EXT_DATASETS = {
     ],
     "safety": [
         {
+            # Scanned and sampled like the others; data/build_aegis_safe_sample.py then keeps
+            # only the safe-labelled responses (refilling to the token budget).
             "key": "aegis", "hf_id": "nvidia/Aegis-AI-Content-Safety-Dataset-2.0",
             "config": "default", "split": "train",
             "prompt_col": "prompt", "response_col": "response",
@@ -128,11 +130,13 @@ EXT_DATASETS = {
                     "Prompt = adversarial if non-empty else vanilla.",
         },
         {
+            # Intermediate sample only: the PKU-SafeRLHF training set (pku_safe below) is built
+            # from it by data/build_pku_safe_sample.py. Not trained on.
             "key": "pku_saferlhf", "hf_id": "PKU-Alignment/PKU-SafeRLHF",
             "config": "default", "split": "train",
             "prompt_col": "prompt", "response_col": "response",  # produced by pku_extract
             "strat_col": None, "id_col": None,
-            "role": "addition", "priority": 2,
+            "role": "intermediate", "priority": 2,
             "special": "pku_safer_response",
             "note": "Preference dataset, not SFT: each row has two responses with "
                     "safety labels. SFT target = the response indexed by "
@@ -140,15 +144,13 @@ EXT_DATASETS = {
                     "category of that chosen response ('safe|none' when unharmful).",
         },
         {
-            # PKU safe-only arm (content-vs-format control): identical extraction
-            # but rows whose chosen (safer) response is itself unsafe are dropped.
-            # Sample construction KEEPS the safe rows of the original pku sample
-            # and refills the removed unsafe share from the safe pool.
+            # PKU-SafeRLHF training set: same extraction, but rows whose chosen
+            # response is labelled unsafe are dropped and refilled from the safe pool.
             "key": "pku_safe", "hf_id": "PKU-Alignment/PKU-SafeRLHF",
             "config": "default", "split": "train",
             "prompt_col": "prompt", "response_col": "response",
             "strat_col": None, "id_col": None,
-            "role": "control arm", "priority": 3,
+            "role": "addition", "priority": 3,
             "special": "pku_safer_response_safe_only",
         },
     ],

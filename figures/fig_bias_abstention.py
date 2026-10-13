@@ -1,5 +1,5 @@
 """Appendix scatter: change in abstention (percentage points) vs change in s_AMB over the
-36 main-grid conditions, coloured by model. Reads results/tables/main_grid.csv."""
+36 main-grid conditions, coloured by model. Reads results/tables/table03_full_results.csv."""
 import sys
 from pathlib import Path
 
@@ -14,7 +14,7 @@ NAME = {"qwen": "Qwen3.5-9B", "ministral": "Ministral-3-8B", "gemma": "Gemma-4-1
 
 def main():
     setup()
-    g = pd.read_csv(TABLES / "main_grid.csv")
+    g = pd.read_csv(TABLES / "table03_full_results.csv")
     g["dA"] = 100 * (g.abstention_ft - g.abstention_base)
     fig, ax = plt.subplots(figsize=(6.4, 4.8))
     ax.axhline(0, ls="--", lw=1.5, color="k", zorder=2); ax.axvline(0, ls="--", lw=1.5, color="k", zorder=2)
@@ -36,7 +36,7 @@ def main():
     ax.spines["left"].set_linewidth(2); ax.spines["bottom"].set_linewidth(2)
     boxed_legend(ax, loc="lower right", handletextpad=0.3, labelspacing=0.35, markerscale=0.9)
     fig.tight_layout()
-    save(fig, "Figure_bias_abstention")
+    save(fig, "fig03b_bias_vs_abstention")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
-"""Experiment 2 category figure: pooled fold change per BBQ category under standard vs
-abstention-augmented SFT over the 12 anchor pairs (pairs with an undefined baseline
-excluded). Reads results/tables/per_category.csv."""
+"""Figure 7: pooled fold change per BBQ category under standard vs abstention-augmented SFT
+over the 12 anchor pairs. Reads results/tables/table11_category_fold_change.csv."""
 import sys
 from pathlib import Path
 
@@ -11,24 +10,15 @@ import matplotlib.pyplot as plt
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from figures.style import (BLACK, CATEGORY_LABEL, CATEGORY_ORDER, TABLES, Y_FC, bold_ticks,  # noqa: E402
                            boxed_legend, save, setup)
-from config import ANCHORS, MAIN_REGIME  # noqa: E402
 
 DARK, LIGHT = "#4285F4", "#c9dcfb"
 
 
-def pooled_fc(pc, arm):
-    runs = {f"ext_{d}_{arm}": MAIN_REGIME[d] for d in ANCHORS}
-    d = pc[[runs.get(r) == g for r, g in zip(pc.run, pc.regime)]]
-    d = d[d.s_amb_base.notna()]
-    g = d.groupby("category").agg(base=("s_amb_base", "mean"), ft=("s_amb_ft", "mean"))
-    return (g.ft / g.base).loc[CATEGORY_ORDER]
-
-
 def main():
     setup()
-    pc = pd.read_csv(TABLES / "per_category.csv")
-    std, aug = pooled_fc(pc, "s1").values, pooled_fc(pc, "idk").values
-    print(pd.DataFrame({"standard": std, "augmented": aug}, index=CATEGORY_ORDER).round(2).to_string())
+    t = pd.read_csv(TABLES / "table11_category_fold_change.csv", index_col="category").loc[CATEGORY_ORDER]
+    std, aug = t["standard"].values, t["abstention_augmented"].values
+    print(t.round(2).to_string())
     x = np.arange(len(CATEGORY_ORDER)); w = 0.38
     fig, ax = plt.subplots(figsize=(13.6, 6.2), dpi=300)
     ax.bar(x - w / 2, std, w, color=DARK, zorder=3, label="Standard SFT")
@@ -47,7 +37,7 @@ def main():
     ax.set_ylim(0, 1.08 * max(std.max(), aug.max()))
     boxed_legend(ax, size=17)
     ax.margins(x=0.01); fig.tight_layout(pad=0.3)
-    save(fig, "Figure_abstention_category", dpi=400)
+    save(fig, "fig07_category_abstention", dpi=400)
 
 
 if __name__ == "__main__":

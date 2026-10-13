@@ -1,5 +1,5 @@
 """Figure: s_AMB before (open) and after (filled) fine-tuning for all 36 conditions,
-rows grouped by domain, one line per model. Reads results/tables/main_grid.csv."""
+rows grouped by domain, one line per model. Reads results/tables/table03_full_results.csv."""
 import sys
 from pathlib import Path
 
@@ -22,7 +22,7 @@ NAME = {"qwen": "Qwen", "gemma": "Gemma", "ministral": "Ministral"}
 
 def main():
     setup()
-    g = pd.read_csv(TABLES / "main_grid.csv").set_index(["model", "dataset"])
+    g = pd.read_csv(TABLES / "table03_full_results.csv").set_index(["model", "dataset"])
     rows = [(d, ds) for d, dsets in MAIN_GRID.items() for ds in dsets]
     N = len(rows); ys = np.arange(N)[::-1]
     fig, ax = plt.subplots(figsize=(11.8, 8.6), dpi=300)
@@ -62,7 +62,7 @@ def main():
                 Line2D([], [], marker="o", color=BLACK, ls="", ms=9, label="filled = after fine-tuning")]
     fig.legend(handles=handles, loc="lower center", ncols=5, frameon=False, fontsize=13,
                bbox_to_anchor=(0.55, 0.005), columnspacing=1.6)
-    save(fig, "Figure_bias_shift", dpi=400)
+    save(fig, "fig06_bias_shift", dpi=400)
 
 
 if __name__ == "__main__":

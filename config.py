@@ -52,7 +52,7 @@ BBQ_CATEGORIES = [
 ]
 BBQ_RAW_URL = "https://raw.githubusercontent.com/nyu-mll/BBQ/main/data/{cat}.jsonl"
 
-# Domain benchmarks used for the target-task capability check (Table 2).
+# Domain benchmarks used for the target-task capability check (Table 15).
 DOMAIN_BENCHMARKS = {
     "math": "gsm8k",          # GSM8K test (1,319), exact-match numeric
     "code": "humaneval",      # HumanEval (164), pass@1, sandboxed execution
@@ -73,7 +73,8 @@ VOL_EXT = f"{VOL}/ext"                  # ext/{scan,pool,dedup,sample,final}/...
 VOL_FINAL = f"{VOL_EXT}/final"          # final/<run>/train.jsonl + progress files
 
 # ---------------------------------------------------------------- run matrix
-# Anchor dataset per domain (Experiments 2 and 3 use these four).
+# Anchor dataset per domain (Experiments 2 and 3 use these four). The Aegis 2.0 and
+# PKU-SafeRLHF training targets are safe-labelled responses only (see data/).
 ANCHORS = {"math": "openr1", "code": "ocr", "medical": "medo1", "safety": "aegis"}
 
 # Abstention-augmented arm (Experiment 2): ~10% of the anchor's training tokens
@@ -97,9 +98,8 @@ ADDITIONS = {
     "math": ["nemotron", "ultradata"],
     "code": ["xcoder", "starcoder_py"],
     "medical": ["medcase", "mediflow"],
-    # pku_saferlhf = "safer response" targets (44% carry an unsafe label);
-    # pku_safe     = safe-labelled responses only -> the PKU cell reported in the paper.
-    "safety": ["wildjailbreak", "pku_saferlhf", "pku_safe"],
+    # PKU-SafeRLHF targets are the safe-labelled responses only (data/build_pku_safe_sample.py).
+    "safety": ["wildjailbreak", "pku_safe"],
 }
 for _d, _keys in ADDITIONS.items():
     for _k in _keys:

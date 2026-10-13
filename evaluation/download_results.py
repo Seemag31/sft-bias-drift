@@ -4,9 +4,9 @@ Volume layout -> local layout
   eval/bbq/<model>/<run>[__hardened]/   -> artifacts/eval/bbq/<model>/<run>[__guided]/
   eval/domain_ext/<domain>/<model>/<run>/ -> artifacts/eval/capability/<domain>/<model>/<run>/
   eval/task8/<model>/<run>/<mode>/       -> artifacts/eval/deliberation/<model>/<run>/<mode>/
-  runs/<run>/<model>/run_config.json     -> artifacts/runs/<run>/<model>/run_config.json
+  ext/final/<domain>_<variant>/train.jsonl -> artifacts/train/<domain>_<variant>.jsonl
 
-Only predictions.parquet, eval_meta.json, and run_config.json are fetched.
+Only predictions.parquet, eval_meta.json, and the training files are fetched.
 
 Run: python evaluation/download_results.py
 """
@@ -22,8 +22,8 @@ from config import VOLUME_NAME  # noqa: E402
 
 LOCAL = ROOT / "artifacts"
 MAP = {"eval/bbq": "eval/bbq", "eval/domain_ext": "eval/capability",
-       "eval/task8": "eval/deliberation", "runs": "runs"}
-KEEP = {"predictions.parquet", "eval_meta.json", "run_config.json"}
+       "eval/task8": "eval/deliberation", "ext/final": "train"}
+KEEP = {"predictions.parquet", "eval_meta.json", "train.jsonl"}
 
 
 def main():
@@ -35,6 +35,8 @@ def main():
             if name not in KEEP:
                 continue
             rel = e.path[len(remote):].lstrip("/").replace("__hardened", "__guided")
+            if name == "train.jsonl":                       # <domain>_<variant>/train.jsonl -> <domain>_<variant>.jsonl
+                rel = os.path.dirname(rel) + ".jsonl"
             dest = LOCAL / local / rel
             if dest.exists() and dest.stat().st_size == e.size:
                 continue

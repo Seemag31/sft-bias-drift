@@ -14,7 +14,7 @@ vLLM. Every run records run_config.json (hyperparameters, loss, hours, cost).
 Entrypoints:
   python -m modal deploy training/train_lora.py
   python -m modal run --detach training/train_lora.py::launch_all       # anchors: s1, s2, idk
-  python -m modal run --detach training/train_lora.py::launch_additions # the 9 additional datasets
+  python -m modal run --detach training/train_lora.py::launch_additions # the 8 additional datasets
   python -m modal run --detach training/train_lora.py --run-name ext_math_s1 --model-key qwen
 """
 import json
@@ -249,9 +249,8 @@ def train(run_name: str, model_key: str):
     from peft import LoraConfig, get_peft_model, PeftModel
     from datasets import Dataset
 
-    # Warm containers keep a stale volume snapshot — reload so this call sees
-    # current data files and current done-markers (a stale view once caused
-    # trainings on superseded data; see run notes 2026-08-10).
+    # Warm containers keep a stale volume snapshot; reload so this call sees
+    # current data files and done-markers.
     vol.reload()
     spec = RUNS[run_name]
     assert model_key in MODELS

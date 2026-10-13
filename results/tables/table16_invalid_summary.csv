@@ -1,0 +1,6 @@
+,value
+baseline_max_invalid_rate,0.009052658421522376
+baseline_max_invalid_count,142.0
+finetuned_total_invalid,9.0
+finetuned_max_invalid_rate,0.00044625780951166645
+code_max_fc_gap_between_regimes,0.07019253108503687

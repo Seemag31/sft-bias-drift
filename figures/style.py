@@ -47,12 +47,7 @@ def boxed_legend(ax, loc="upper right", size=11, **kw):
     return leg
 
 
-NO_METADATA = {"pdf": {"Creator": None, "Producer": None, "CreationDate": None},
-               "png": {"Software": None}}
-
-
 def save(fig, name, dpi=300, **kw):
-    for ext in ("pdf", "png"):
-        fig.savefig(FIGURES / f"{name}.{ext}", dpi=dpi, bbox_inches="tight", facecolor="white",
-                    metadata=NO_METADATA[ext], **kw)
+    fig.savefig(FIGURES / f"{name}.pdf", dpi=dpi, bbox_inches="tight", facecolor="white",
+                metadata={"Creator": None, "Producer": None, "CreationDate": None}, **kw)
     print("wrote", name)

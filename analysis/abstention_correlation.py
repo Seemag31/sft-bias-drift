@@ -1,10 +1,10 @@
 """Relationship between the change in abstention and the change in bias across the
 36 main-grid conditions (Results paragraph and Appendix correlation tables).
 
-Reads results/tables/main_grid.csv and writes
-  results/tables/abstention_correlation.csv   Spearman rho, p, and a 10,000-resample
+Reads results/tables/table03_full_results.csv and writes
+  results/tables/table07_abstention_correlation.csv   Spearman rho, p, and a 10,000-resample
                                               bootstrap CI over conditions, overall and per model
-The per-condition values (A_base, A_SFT, delta A, delta s_AMB) are already in main_grid.csv.
+The per-condition values (A_base, A_SFT, delta A, delta s_AMB) are already in table03_full_results.csv.
 
 Run: python analysis/abstention_correlation.py
 """
@@ -31,8 +31,11 @@ def boot_ci(x, y):
 
 
 def main():
-    g = pd.read_csv(TABLES / "main_grid.csv")
+    g = pd.read_csv(TABLES / "table03_full_results.csv")
     g["delta_abstention"] = g.abstention_ft - g.abstention_base
+    # Fixed row order (by model, UltraData conditions last) so bootstrap resamples are reproducible.
+    g = g.assign(_u=g.dataset == "ultradata", _m=g.model.map(MODEL_ORDER.index)).sort_values(
+        ["_u", "_m"], kind="stable")
     out = []
     for name, d in [("all", g)] + [(m, g[g.model == m]) for m in MODEL_ORDER]:
         rho, p = spearmanr(d.delta_abstention, d.s_amb_delta)
@@ -42,7 +45,7 @@ def main():
                     "mean_delta_abstention_pp": 100 * d.delta_abstention.mean()})
         print(f"{name:10s} n={len(d):2d} rho={rho:+.2f} p={p:.3f} CI=[{lo:+.2f}, {hi:+.2f}] "
               f"decreases={int((d.delta_abstention < 0).sum())} mean dA={100 * d.delta_abstention.mean():+.1f} pp")
-    pd.DataFrame(out).to_csv(TABLES / "abstention_correlation.csv", index=False)
+    pd.DataFrame(out).to_csv(TABLES / "table07_abstention_correlation.csv", index=False)
 
 
 if __name__ == "__main__":

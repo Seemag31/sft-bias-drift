@@ -17,7 +17,7 @@ HUE = {"qwen": ("#00ACC1", "#C2EEF4"), "ministral": ("#FB8C00", "#FFE0B2"), "gem
 
 def main():
     setup()
-    t = pd.read_csv(TABLES / "deliberation_2x2.csv")
+    t = pd.read_csv(TABLES / "table14_deliberation.csv")
     for m in ["qwen", "ministral", "gemma"]:
         d = t[t.model == m].pivot(index="domain", columns="mode", values="fold_change_vs_base_direct").loc[CONDS]
         fd, ft = d["direct"].values, d["think"].values
@@ -40,7 +40,7 @@ def main():
         ax.spines["left"].set_linewidth(2); ax.spines["bottom"].set_linewidth(2)
         boxed_legend(ax)
         fig.tight_layout()
-        save(fig, f"Figure_deliberation_FC_{m}")
+        save(fig, f"fig05_deliberation_{m}")
 
 
 if __name__ == "__main__":
