@@ -67,7 +67,7 @@ python evaluation/download_results.py
 
 # 4. tables and figures (local)
 for f in main_results per_category abstention_correlation decomposition demographic_content \
-         context_sensitivity decoding_regime switch_counts deliberation_table capability_table; do
+         decomposition_by_category context_sensitivity decoding_regime switch_counts deliberation_table capability_table; do
   python analysis/$f.py
 done
 for f in figures/fig_*.py; do python "$f"; done
@@ -100,6 +100,7 @@ a `__guided` suffix marks guided-choice evaluation.
 | Tables 5, 6 (category changes) | `analysis/per_category.py` | `tables/table05_06_category_changes.csv` |
 | Table 7 (abstention-bias correlation) | `analysis/abstention_correlation.py` | `tables/table07_abstention_correlation.csv` |
 | Table 9 (bias decomposition, disambiguated check) | `analysis/decomposition.py` | `tables/table09_decomposition.csv` |
+| Category breakdown of the decomposition (C.5) | `analysis/decomposition_by_category.py` | `tables/table09b_decomposition_category.csv` |
 | Table 10 (training-data demographic content) | `analysis/demographic_content.py` | `tables/table10_demographic_density.csv`, `table10_pooled_test.csv` |
 | Table 11 (category fold change, standard vs augmented) | `analysis/per_category.py` | `tables/table11_category_fold_change.csv` |
 | Table 12 (matched conditions, Experiment 2) | `analysis/main_results.py` | `tables/table12_abstention_control.csv` |
