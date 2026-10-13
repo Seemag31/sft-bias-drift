@@ -100,14 +100,14 @@ a `__guided` suffix marks guided-choice evaluation.
 | Tables 5, 6 (category changes) | `analysis/per_category.py` | `tables/table05_06_category_changes.csv` |
 | Table 7 (abstention-bias correlation) | `analysis/abstention_correlation.py` | `tables/table07_abstention_correlation.csv` |
 | Table 9 (bias decomposition, disambiguated check) | `analysis/decomposition.py` | `tables/table09_decomposition.csv` |
-| Category breakdown of the decomposition (C.5) | `analysis/decomposition_by_category.py` | `tables/table09b_decomposition_category.csv` |
-| Table 10 (training-data demographic content) | `analysis/demographic_content.py` | `tables/table10_demographic_density.csv`, `table10_pooled_test.csv` |
-| Table 11 (category fold change, standard vs augmented) | `analysis/per_category.py` | `tables/table11_category_fold_change.csv` |
-| Table 12 (matched conditions, Experiment 2) | `analysis/main_results.py` | `tables/table12_abstention_control.csv` |
-| Table 13 (context sensitivity) | `analysis/context_sensitivity.py` | `tables/table13_context_sensitivity.csv` |
-| Table 14 (deliberation) | `analysis/deliberation_table.py` | `tables/table14_deliberation.csv` |
-| Table 15 (target-task capability) | `analysis/capability_table.py` | `tables/table15_capability.csv` |
-| Table 16, F.1 (decoding regime, invalid responses) | `analysis/decoding_regime.py` | `tables/table16_decoding_regime.csv`, `table16_invalid_summary.csv` |
+| Table 10 (decomposition by category) | `analysis/decomposition_by_category.py` | `tables/table10_decomposition_category.csv` |
+| Table 11 (training-data demographic content) | `analysis/demographic_content.py` | `tables/table11_demographic_density.csv`, `table11_pooled_test.csv` |
+| Table 12 (category fold change, standard vs augmented) | `analysis/per_category.py` | `tables/table12_category_fold_change.csv` |
+| Table 13 (matched conditions, Experiment 2) | `analysis/main_results.py` | `tables/table13_abstention_control.csv` |
+| Table 14 (context sensitivity) | `analysis/context_sensitivity.py` | `tables/table14_context_sensitivity.csv` |
+| Table 15 (deliberation) | `analysis/deliberation_table.py` | `tables/table15_deliberation.csv` |
+| Table 16 (target-task capability) | `analysis/capability_table.py` | `tables/table16_capability.csv` |
+| Table 17, F.1 (decoding regime, invalid responses) | `analysis/decoding_regime.py` | `tables/table17_decoding_regime.csv`, `table17_invalid_summary.csv` |
 | Appendix C.4 (item-level switch counts) | `analysis/switch_counts.py` | `tables/c4_switch_counts.csv` |
 | Figure 3a | `figures/fig_category_domain_fc.py` | `figures/fig03a_category_domain.pdf` |
 | Figure 3b | `figures/fig_bias_abstention.py` | `figures/fig03b_bias_vs_abstention.pdf` |
@@ -116,7 +116,7 @@ a `__guided` suffix marks guided-choice evaluation.
 | Figure 6 | `figures/fig_bias_shift.py` | `figures/fig06_bias_shift.pdf` |
 | Figure 7 | `figures/fig_abstention_category.py` | `figures/fig07_category_abstention.pdf` |
 
-`tables/per_category.csv` holds the per-category scores behind Tables 5, 6, 10, 11 and
+`tables/per_category.csv` holds the per-category scores behind Tables 5, 6, 11, 12 and
 Figures 3a and 7.
 
 ## What is included

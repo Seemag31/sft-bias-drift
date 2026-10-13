@@ -1,7 +1,7 @@
-"""Target-task capability before and after fine-tuning (Table 15) from the benchmark evals.
+"""Target-task capability before and after fine-tuning (Table 16) from the benchmark evals.
 
 Reads artifacts/eval/capability/<domain>/<model>/<run>/eval_meta.json and writes
-results/tables/table15_capability.csv: standard (seed 1) and abstention-augmented anchors
+results/tables/table16_capability.csv: standard (seed 1) and abstention-augmented anchors
 per domain and model, with the baseline accuracy.
 
 Run: python analysis/capability_table.py
@@ -34,7 +34,7 @@ def main():
     t["delta"] = t.accuracy - t.accuracy_base
     TABLES.mkdir(parents=True, exist_ok=True)
     t[["domain", "benchmark", "model", "run", "n", "accuracy_base", "accuracy", "delta"]].to_csv(
-        TABLES / "table15_capability.csv", index=False)
+        TABLES / "table16_capability.csv", index=False)
     print(t.pivot_table(index=["domain", "model"], columns="run", values="accuracy").round(3).to_string())
 
 

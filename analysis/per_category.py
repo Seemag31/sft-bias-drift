@@ -1,4 +1,4 @@
-"""Per-category results (Figures 3a and 7; Tables 5, 6, 11).
+"""Per-category results (Figures 3a and 7; Tables 5, 6, 12).
 
 Scores every main-grid run and the abstention-augmented anchors on each BBQ category.
 A baseline that abstains on every item in a category has s_AMB = 0, so the change is
@@ -9,7 +9,7 @@ Writes to results/tables/:
   per_category.csv                   model x run x category: s_AMB before/after, change
   table05_06_category_changes.csv    mean change per category (overall and by domain) and
                                      the share of conditions with a positive change
-  table11_category_fold_change.csv   pooled fold change per category, standard vs
+  table12_category_fold_change.csv   pooled fold change per category, standard vs
                                      abstention-augmented SFT (12 anchor pairs)
 
 Run: python analysis/per_category.py
@@ -54,7 +54,7 @@ def main():
                              aggfunc="mean").add_prefix("mean_delta_")).reindex(BBQ_CATEGORIES)
     t.to_csv(TABLES / "table05_06_category_changes.csv")
 
-    # Table 11: mean fine-tuned s_AMB over mean baseline s_AMB, per category
+    # Table 12: mean fine-tuned s_AMB over mean baseline s_AMB, per category
     fc = {}
     for name, arm in (("standard", "s1"), ("abstention_augmented", "idk")):
         keep = {(f"ext_{d}_{arm}", MAIN_REGIME[d]) for d in ANCHORS}
@@ -62,7 +62,7 @@ def main():
         a = a[a.s_amb_base != 0]
         s = a.groupby("category").agg(b=("s_amb_base", "mean"), f=("s_amb_ft", "mean"))
         fc[name] = s.f / s.b
-    pd.DataFrame(fc).reindex(BBQ_CATEGORIES).to_csv(TABLES / "table11_category_fold_change.csv")
+    pd.DataFrame(fc).reindex(BBQ_CATEGORIES).to_csv(TABLES / "table12_category_fold_change.csv")
     print(t.round(3).to_string())
 
 

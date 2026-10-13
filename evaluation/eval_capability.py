@@ -1,4 +1,4 @@
-"""Target-task capability before and after fine-tuning (Table 15).
+"""Target-task capability before and after fine-tuning (Table 16).
 
 Benchmarks: GSM8K (exact match on the final number), HumanEval (pass@1 with
 sandboxed execution), MedQA 4-option (letter accuracy), Aegis 2.0 test split

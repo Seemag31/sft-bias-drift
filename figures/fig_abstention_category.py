@@ -1,5 +1,5 @@
 """Figure 7: pooled fold change per BBQ category under standard vs abstention-augmented SFT
-over the 12 anchor pairs. Reads results/tables/table11_category_fold_change.csv."""
+over the 12 anchor pairs. Reads results/tables/table12_category_fold_change.csv."""
 import sys
 from pathlib import Path
 
@@ -16,7 +16,7 @@ DARK, LIGHT = "#4285F4", "#c9dcfb"
 
 def main():
     setup()
-    t = pd.read_csv(TABLES / "table11_category_fold_change.csv", index_col="category").loc[CATEGORY_ORDER]
+    t = pd.read_csv(TABLES / "table12_category_fold_change.csv", index_col="category").loc[CATEGORY_ORDER]
     std, aug = t["standard"].values, t["abstention_augmented"].values
     print(t.round(2).to_string())
     x = np.arange(len(CATEGORY_ORDER)); w = 0.38

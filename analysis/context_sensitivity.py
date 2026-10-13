@@ -1,4 +1,4 @@
-"""Context sensitivity of abstention training (Appendix D.4, Table 13).
+"""Context sensitivity of abstention training (Appendix D.4, Table 14).
 
 Each BBQ scenario is an ambiguous item and its disambiguated twin. For the 12 anchor
 conditions, standard SFT is compared with abstention-augmented SFT on the same scenarios:
@@ -8,7 +8,7 @@ conditions, standard SFT is compared with abstention-augmented SFT on the same s
   * over-abstention: abstains on a disambiguated twin it previously answered correctly;
   * selectivity: change in ambiguous abstention minus change in disambiguated abstention.
 
-Writes results/tables/table13_context_sensitivity.csv (all conditions and each model).
+Writes results/tables/table14_context_sensitivity.csv (all conditions and each model).
 
 Run: python analysis/context_sensitivity.py
 """
@@ -62,7 +62,7 @@ def main():
 
     out = pd.DataFrame([summarize(c, "all")] + [summarize(c[c.model == m], m) for m in MODEL_ORDER])
     TABLES.mkdir(parents=True, exist_ok=True)
-    out.to_csv(TABLES / "table13_context_sensitivity.csv", index=False)
+    out.to_csv(TABLES / "table14_context_sensitivity.csv", index=False)
     print(out.round(1).to_string(index=False))
 
 

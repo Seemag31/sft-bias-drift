@@ -16,7 +16,7 @@ DOMS = ["math", "code", "medical", "safety"]; LAB = ["Math", "Code", "Medical", 
 
 def main():
     setup()
-    t = pd.read_csv(TABLES / "table12_abstention_control.csv")
+    t = pd.read_csv(TABLES / "table13_abstention_control.csv")
     shared_max = 1.05 * t[t.model.isin(["qwen", "ministral"])][["fc_standard", "fc_augmented"]].max().max()
     for m in ["qwen", "ministral", "gemma"]:
         d = t[t.model == m].set_index("domain").loc[DOMS]

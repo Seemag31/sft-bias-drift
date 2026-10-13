@@ -52,7 +52,7 @@ BBQ_CATEGORIES = [
 ]
 BBQ_RAW_URL = "https://raw.githubusercontent.com/nyu-mll/BBQ/main/data/{cat}.jsonl"
 
-# Domain benchmarks used for the target-task capability check (Table 15).
+# Domain benchmarks used for the target-task capability check (Table 16).
 DOMAIN_BENCHMARKS = {
     "math": "gsm8k",          # GSM8K test (1,319), exact-match numeric
     "code": "humaneval",      # HumanEval (164), pass@1, sandboxed execution

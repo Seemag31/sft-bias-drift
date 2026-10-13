@@ -1,4 +1,4 @@
-"""Bias decomposition by BBQ category (Appendix C.5, category breakdown).
+"""Bias decomposition by BBQ category (Appendix C.5, Table 10).
 
 For each of the 36 conditions and each category, s_AMB = R * s_cond is split with the
 midpoint rule used in decomposition.py:
@@ -10,11 +10,7 @@ mean(R) * delta s_cond averaged over the 36 conditions; its share is that contri
 percentage of the sum over categories (shares sum to 100; negative shares offset the total).
 Shares are not weighted by category size.
 
-Because each condition's change is weighted by its answer rate, the share is reported next to
-the answer-rate-weighted mean of delta s_cond (sum R * d / sum R), which always agrees with the
-share in sign; the unweighted mean is kept in the CSV.
-
-Writes results/tables/table09b_decomposition_category.csv
+Writes results/tables/table10_decomposition_category.csv
 
 Run: python analysis/decomposition_by_category.py
 """
@@ -54,16 +50,14 @@ def main():
                 sb, sf = category_split(base.loc[ci]), category_split(ft.loc[ci])
                 for c in BBQ_CATEGORIES:
                     (rb, cb), (rf, cf) = sb[c], sf[c]
-                    rows.append({"category": c, "r_bar": (rf + rb) / 2, "d_s_cond": cf - cb,
-                                 "d_s_amb": rf * cf - rb * cb, "stereo_part": (rf + rb) / 2 * (cf - cb)})
+                    rows.append({"category": c, "d_s_cond": cf - cb, "d_s_amb": rf * cf - rb * cb, "stereo_part": (rf + rb) / 2 * (cf - cb)})
     g = pd.DataFrame(rows).groupby("category")
-    t = pd.DataFrame({"d_s_cond_weighted": g.stereo_part.sum() / g.r_bar.sum(),
-                      "d_s_cond_unweighted": g.d_s_cond.mean(), "d_s_amb": g.d_s_amb.mean(),
+    t = pd.DataFrame({"d_s_cond": g.d_s_cond.mean(), "d_s_amb": g.d_s_amb.mean(),
                       "stereo_contribution": g.stereo_part.mean()}).reindex(BBQ_CATEGORIES)
     t["share_pct"] = 100 * t.stereo_contribution / t.stereo_contribution.sum()
     t = t.sort_values("share_pct", ascending=False)
     TABLES.mkdir(parents=True, exist_ok=True)
-    t.to_csv(TABLES / "table09b_decomposition_category.csv")
+    t.to_csv(TABLES / "table10_decomposition_category.csv")
     print(t.round(3).to_string())
 
 

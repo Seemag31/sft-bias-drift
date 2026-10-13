@@ -1,4 +1,4 @@
-"""Invalid responses and decoding regime (Appendix F.1, Table 16).
+"""Invalid responses and decoding regime (Appendix F.1, Table 17).
 
 Free generation lets the model reply however it likes; guided choice restricts the answer
 to A, B or C. For the code and safety anchors (standard and abstention-augmented SFT) this
@@ -7,8 +7,8 @@ response rate under free generation. Also reports the baseline and grid-wide inv
 quoted in the text.
 
 Writes to results/tables/:
-  table16_decoding_regime.csv   code and safety anchors x {standard, abstention-augmented}
-  table16_invalid_summary.csv   baseline maximum, fine-tuned total and maximum, code gap
+  table17_decoding_regime.csv   code and safety anchors x {standard, abstention-augmented}
+  table17_invalid_summary.csv   baseline maximum, fine-tuned total and maximum, code gap
 
 Run: python analysis/decoding_regime.py
 """
@@ -45,7 +45,7 @@ def main():
                     r[f"invalid_{regime}"] = mf["invalid_rate"]
                 rows.append(r)
     t = pd.DataFrame(rows)
-    t.to_csv(TABLES / "table16_decoding_regime.csv", index=False)
+    t.to_csv(TABLES / "table17_decoding_regime.csv", index=False)
 
     # counts quoted in F.1
     base_inv = [invalid_ambiguous(load_predictions(m, "baseline" + s))
@@ -58,7 +58,7 @@ def main():
                "finetuned_total_invalid": sum(k for k, _ in ft_inv),
                "finetuned_max_invalid_rate": max(k / n for k, n in ft_inv),
                "code_max_fc_gap_between_regimes": float((code.fc_free - code.fc_guided).abs().max())}
-    pd.Series(summary).to_frame("value").to_csv(TABLES / "table16_invalid_summary.csv")
+    pd.Series(summary).to_frame("value").to_csv(TABLES / "table17_invalid_summary.csv")
     print(t.round(3).to_string(index=False))
     print(summary)
 

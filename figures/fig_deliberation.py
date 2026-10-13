@@ -17,7 +17,7 @@ HUE = {"qwen": ("#00ACC1", "#C2EEF4"), "ministral": ("#FB8C00", "#FFE0B2"), "gem
 
 def main():
     setup()
-    t = pd.read_csv(TABLES / "table14_deliberation.csv")
+    t = pd.read_csv(TABLES / "table15_deliberation.csv")
     for m in ["qwen", "ministral", "gemma"]:
         d = t[t.model == m].pivot(index="domain", columns="mode", values="fold_change_vs_base_direct").loc[CONDS]
         fd, ft = d["direct"].values, d["think"].values

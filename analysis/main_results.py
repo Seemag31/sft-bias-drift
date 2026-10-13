@@ -4,7 +4,7 @@ Writes to results/tables/:
   table03_full_results.csv        the 36 conditions (also Tables 1 and 8): s_AMB before/after,
                                   change, fold change, bootstrap z, abstention, invalid rate
   table04_seed_replication.csv    seed 1 vs seed 2 for the 12 anchor conditions
-  table12_abstention_control.csv  standard vs abstention-augmented SFT, 12 anchor pairs
+  table13_abstention_control.csv  standard vs abstention-augmented SFT, 12 anchor pairs
 
 Standard errors come from a paired item bootstrap (1,000 resamples, seed 42):
 z = delta s_AMB / SE.
@@ -66,7 +66,7 @@ def main():
     seed.to_csv(TABLES / "table04_seed_replication.csv", index=False)
     print(f"table04: direction matches {int(seed.same_sign.sum())}/12, median gap {seed.abs_gap.median():.4f}")
 
-    # Table 12: standard vs abstention-augmented SFT
+    # Table 13: standard vs abstention-augmented SFT
     ctl = []
     for m in MODEL_ORDER:
         for d in ANCHORS:
@@ -76,9 +76,9 @@ def main():
                         "fc_standard": n["fold_change"], "fc_augmented": i["fold_change"],
                         "abstention_standard": n["abstention_ft"], "abstention_augmented": i["abstention_ft"]})
     ctl = pd.DataFrame(ctl)
-    ctl.to_csv(TABLES / "table12_abstention_control.csv", index=False)
+    ctl.to_csv(TABLES / "table13_abstention_control.csv", index=False)
     up = ctl.fc_standard > 1
-    print(f"table12: augmentation lowers FC in {int((ctl.fc_augmented < ctl.fc_standard).sum())}/12; "
+    print(f"table13: augmentation lowers FC in {int((ctl.fc_augmented < ctl.fc_standard).sum())}/12; "
           f"in {int((ctl.fc_augmented[up] < ctl.fc_standard[up]).sum())}/{int(up.sum())} conditions "
           f"where standard SFT increases bias")
 

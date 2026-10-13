@@ -1,4 +1,4 @@
-"""Demographic content of the training data vs bias change (Appendix C.6, Table 10).
+"""Demographic content of the training data vs bias change (Appendix C.6, Table 11).
 
 For each of the 12 training files, the density of demographic terms per BBQ category
 (lexicon hits per 10,000 words of prompt + response) is related to that category's change
@@ -7,8 +7,8 @@ model x category; the test is Spearman's rho, over all dataset x model x categor
 observations and over datasets (mean of models, with a dataset-level bootstrap CI).
 
 Reads artifacts/train/<domain>_<variant>.jsonl and results/tables/per_category.csv.
-Writes results/tables/table10_demographic_density.csv (one row per category, plus the
-pooled test in results/tables/table10_pooled_test.csv).
+Writes results/tables/table11_demographic_density.csv (one row per category, plus the
+pooled test in results/tables/table11_pooled_test.csv).
 
 Run: python analysis/demographic_content.py
 """
@@ -111,8 +111,8 @@ def main():
                      "density_min": g.per10k.min(), "density_max": g.per10k.max(),
                      "mean_delta": g.delta.mean(), "rho": rho, "p": p})
     TABLES.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(rows).to_csv(TABLES / "table10_demographic_density.csv", index=False)
-    pooled.to_csv(TABLES / "table10_pooled_test.csv", index=False)
+    pd.DataFrame(rows).to_csv(TABLES / "table11_demographic_density.csv", index=False)
+    pooled.to_csv(TABLES / "table11_pooled_test.csv", index=False)
     print(pd.DataFrame(rows).round(3).to_string(index=False))
     print(pooled.round(3).to_string(index=False))
 
